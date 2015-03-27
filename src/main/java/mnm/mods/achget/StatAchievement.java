@@ -3,7 +3,6 @@ package mnm.mods.achget;
 import net.minecraft.event.HoverEvent;
 import net.minecraft.init.Items;
 import net.minecraft.stats.Achievement;
-import net.minecraft.stats.IStatStringFormat;
 import net.minecraft.stats.StatBase;
 import net.minecraft.stats.StatList;
 import net.minecraft.util.ChatComponentText;
@@ -15,14 +14,15 @@ public class StatAchievement extends Achievement {
 
     private StatBase stat;
     private IChatComponent name;
+    private String description;
     private int count;
 
     public StatAchievement(JsonAchievement json) {
         super(json.id, "", json.xPos, json.yPos, Items.apple, null);
         this.stat = StatList.getOneShotStat(json.stat);
         this.name = json.name;
+        this.description = json.desc;
         this.count = json.count;
-        this.setStatStringFormatter(new Formatter(json.desc));
         this.registerStat();
     }
 
@@ -43,18 +43,9 @@ public class StatAchievement extends Achievement {
         return ichatcomponent;
     }
 
-    private class Formatter implements IStatStringFormat {
-
-        final String desc;
-
-        public Formatter(String desc) {
-            this.desc = desc;
-        }
-
-        @Override
-        public String formatString(String p_74535_1_) {
-            return desc;
-        }
+    @Override
+    public String getDescription() {
+        return this.description;
     }
 
     static class JsonAchievement {

@@ -4,7 +4,7 @@ import java.io.File;
 
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.event.entity.living.LivingEvent;
+import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
 import net.minecraftforge.event.entity.player.AchievementEvent;
 
 import org.apache.logging.log4j.Logger;
@@ -39,13 +39,12 @@ public class AchievementGet {
     }
 
     @SubscribeEvent
-    public void onLiving(LivingEvent live) {
-        // prevents stack overflows
-        if (live instanceof AchievementEvent)
+    public void onLiving(LivingUpdateEvent event) {
+        // disconnect is an event (or something)
+        if (event.entity == null)
             return;
-
-        if (live.entity instanceof EntityPlayerMP) {
-            checkStats((EntityPlayerMP) live.entity);
+        if (event.entity instanceof EntityPlayerMP) {
+            checkStats((EntityPlayerMP) event.entity);
         }
     }
 
@@ -55,7 +54,6 @@ public class AchievementGet {
             if (handler.shouldAward(player)) {
                 handler.giveAchievement(player);
             }
-
         }
     }
 }
