@@ -26,6 +26,14 @@ public class StatAchievement extends Achievement {
         this.registerStat();
     }
 
+    public StatBase getStat() {
+        return stat;
+    }
+
+    public int getCount() {
+        return count;
+    }
+
     @Override
     public IChatComponent getStatName() {
         IChatComponent ichatcomponent = this.name.createCopy();
