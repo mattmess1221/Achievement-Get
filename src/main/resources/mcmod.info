@@ -1,0 +1,11 @@
+{
+	"modListVersion": 2,
+	"modList": [{
+		"modid": "achget",
+		"name": "Achievement Get",
+		"description": "So many achievements",
+		"version": "${version}",
+		"mcversion": "${mcversion}",
+		"authorList": ["killjoy1221"]
+	}]
+}
