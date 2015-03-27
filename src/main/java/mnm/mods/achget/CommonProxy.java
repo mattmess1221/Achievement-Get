@@ -17,12 +17,13 @@ public class CommonProxy {
 
     public void init(File f) {
         Logger logger = AchievementGet.logger;
-        // The default
+        // The default TODO externalize
         String json = "[{\n" // [{
                 + "\t\"id\": \"walk1000\",\n" // "id": "walk100",
                 + "\t\"name\": \"Kilo\",\n" // "name": "Kilo",
                 + "\t\"desc\": \"Walk 1km\",\n" // "desc": "Walk 100m",
-                + "\t\"stat\": \"stat.walkOneCm\",\n" // "stat": "stat.walkOneCm",
+                // "stat": "stat.walkOneCm",
+                + "\t\"stat\": \"stat.walkOneCm\",\n" //
                 + "\t\"count\": 1000,\n" // "count": 100",
                 + "\t\"xPos\": 0,\n" // "xPos": 0,
                 + "\t\"yPos\": 0\n" // "yPos": 0
@@ -41,10 +42,7 @@ public class CommonProxy {
         AchievementGet instance = AchievementGet.instance;
         instance.achievements = new StatAchievement[achieves.length];
 
-        if (achieves.length == 0) {
-            logger.info("No achievements registered");
-            return;
-        }
+        logger.info("Registering " + achieves.length + " achievements.");
         // load achievements
         for (int i = 0; i < achieves.length; i++) {
             instance.achievements[i] = new StatAchievement(achieves[i]);
