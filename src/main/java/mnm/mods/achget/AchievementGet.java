@@ -5,6 +5,7 @@ import java.io.File;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.living.LivingEvent;
+import net.minecraftforge.event.entity.player.AchievementEvent;
 
 import org.apache.logging.log4j.Logger;
 
@@ -39,6 +40,10 @@ public class AchievementGet {
 
     @SubscribeEvent
     public void onLiving(LivingEvent live) {
+        // prevents stack overflows
+        if (live instanceof AchievementEvent)
+            return;
+
         if (live.entity instanceof EntityPlayerMP) {
             checkStats((EntityPlayerMP) live.entity);
         }
