@@ -36,11 +36,23 @@ public class StatAchievement extends Achievement {
 
     @Override
     public IChatComponent getStatName() {
-        IChatComponent ichatcomponent = this.name.createCopy();
-        ChatStyle style = ichatcomponent.getChatStyle();
+        IChatComponent text = this.name.createCopy();
+        ChatStyle style = text.getChatStyle();
         style.setColor(EnumChatFormatting.GRAY);
-        style.setChatHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_ACHIEVEMENT, new ChatComponentText(this.statId)));
-        return ichatcomponent;
+
+        // So the achievement doesn't have to be registered on the client.
+        IChatComponent desc = new ChatComponentText("");
+        desc.appendSibling(text.createCopy()).appendText("\n");
+        IChatComponent type = new ChatComponentText("Achievement");
+        type.getChatStyle().setItalic(true);
+        desc.appendSibling(type).appendText("\n");
+        desc.appendSibling(new ChatComponentText(this.getDescription()));
+        HoverEvent hover = new HoverEvent(HoverEvent.Action.SHOW_TEXT, desc);
+        style.setChatHoverEvent(hover);
+        // style.setChatHoverEvent(new
+        // HoverEvent(HoverEvent.Action.SHOW_ACHIEVEMENT, new
+        // ChatComponentText(this.statId)));
+        return text;
     }
 
     @Override

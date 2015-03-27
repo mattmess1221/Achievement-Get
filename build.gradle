@@ -25,7 +25,7 @@ archivesBaseName = "AchievementGet"
 
 minecraft {
     version = "1.7.10-recommended"
-    runDir = "eclipse"
+    runDir = "run"
     
     // the mappings can be changed at any time, and must be in the following format.
     // snapshot_YYYYMMDD   snapshot are built nightly.
