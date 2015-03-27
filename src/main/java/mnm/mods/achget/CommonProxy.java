@@ -5,6 +5,7 @@ import java.io.IOException;
 
 import mnm.mods.achget.StatAchievement.JsonAchievement;
 import net.minecraft.util.IChatComponent;
+import net.minecraftforge.common.AchievementPage;
 
 import org.apache.commons.io.Charsets;
 import org.apache.commons.io.FileUtils;
@@ -48,5 +49,8 @@ public class CommonProxy {
         for (int i = 0; i < achieves.length; i++) {
             instance.achievements[i] = new StatAchievement(achieves[i]);
         }
+        // register page
+        AchievementPage page = new AchievementPage("Achievement Get", AchievementGet.instance.achievements);
+        AchievementPage.registerAchievementPage(page);
     }
 }
