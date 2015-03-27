@@ -5,7 +5,6 @@ import java.io.File;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
-import net.minecraftforge.event.entity.player.AchievementEvent;
 
 import org.apache.logging.log4j.Logger;
 

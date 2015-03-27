@@ -9,6 +9,7 @@ import net.minecraftforge.common.AchievementPage;
 
 import org.apache.commons.io.Charsets;
 import org.apache.commons.io.FileUtils;
+import org.apache.commons.io.IOUtils;
 import org.apache.logging.log4j.Logger;
 
 import com.google.gson.GsonBuilder;
@@ -18,21 +19,15 @@ public class CommonProxy {
     public void init(File f) {
         Logger logger = AchievementGet.logger;
         // The default TODO externalize
-        String json = "[{\n" // [{
-                + "\t\"id\": \"walk1000\",\n" // "id": "walk100",
-                + "\t\"name\": \"Kilo\",\n" // "name": "Kilo",
-                + "\t\"desc\": \"Walk 1km\",\n" // "desc": "Walk 100m",
-                // "stat": "stat.walkOneCm",
-                + "\t\"stat\": \"stat.walkOneCm\",\n" //
-                + "\t\"count\": 1000,\n" // "count": 100",
-                + "\t\"xPos\": 0,\n" // "xPos": 0,
-                + "\t\"yPos\": 0\n" // "yPos": 0
-                + "}]"; // }]
+        String json = "[]";
         try {
-            if (f.exists())
+            if (f.exists()) {
                 json = FileUtils.readFileToString(f, Charsets.UTF_8);
-            else
+            } else {
+                // load and save defaults
+                json = IOUtils.toString(ClassLoader.getSystemResourceAsStream("achget.json"));
                 FileUtils.write(f, json);
+            }
         } catch (IOException e) {
             logger.warn("Unable to load achievements.", e);
         }

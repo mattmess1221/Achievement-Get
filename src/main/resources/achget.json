@@ -1,0 +1,128 @@
+[
+	{
+		"id": "walk10",
+		"name": "Baby Steps",
+		"desc": "Walk 10m",
+		"stat": "stat.walkOneCm",
+		"count": 1000,
+		"xPos": 0,
+		"yPos": 0
+	},
+	{
+		"id": "walk1000",
+		"name": "Kilometer",
+		"desc": "Walk a kilometer",
+		"stat": "stat.walkOneCm",
+		"count": 100000,
+		"xPos": 1,
+		"yPos": 0
+	},
+	{
+		"id": "walk1000000",
+		"name": "These Boots Were Made for Walking",
+		"desc": "And that's just what they'll do (Walk for 1000 Km)",
+		"stat": "stat.walkOneCm",
+		"count": 100000000,
+		"xPos": 1,
+		"yPos": 0
+	},
+	{
+		"id": "jump",
+		"name": "Jumper",
+		"desc": "Jump",
+		"stat": "stat.jump",
+		"count": 1,
+		"xPos": 0,
+		"yPos": 2
+	},
+	{
+		"id": "jump2",
+		"name": "Jump x10",
+		"desc": "Jump twice",
+		"stat": "stat.jump",
+		"count": 10,
+		"xPos": 1,
+		"yPos": 2
+	},
+	{
+		"id": "jump3",
+		"name": "Jump x50",
+		"desc": "Jump 50 times",
+		"stat": "stat.jump",
+		"count": 50,
+		"xPos": 2,
+		"yPos": 2
+	},
+	{
+		"id": "jump4",
+		"name": "Bouncy",
+		"desc": "Jump 100 times",
+		"stat": "stat.jump",
+		"count": 100,
+		"xPos": 3,
+		"yPos": 2
+	},
+	{
+		"id": "fall",
+		"name": "Small Bump",
+		"desc": "Fall 1m",
+		"stat": "stat.fallOneCm",
+		"count": 10,
+		"xPos": 0,
+		"yPos": 3
+	},
+	{
+		"id": "minuteman",
+		"name": "Minuteman",
+		"desc": "Play for 1 minute.",
+		"stat": "stat.playOneMinute",
+		"count": 1200,
+		"xPos": 0,
+		"yPos": 1
+	},
+	{
+		"id": "prettyFun",
+		"name": "Pretty Fun",
+		"desc": "Play for 10 minutes.",
+		"stat": "stat.playOneMinute",
+		"count": 12000,
+		"xPos": 1,
+		"yPos": 1
+	},
+	{
+		"id": "gameDay",
+		"name": "Game Day",
+		"desc": "Play for a full game day.",
+		"stat": "stat.playOneMinute",
+		"count": 24000,
+		"xPos": 2,
+		"yPos": 1
+	},
+	{
+		"id": "addict",
+		"name": "Addict",
+		"desc": "Play for 1 hour.",
+		"stat": "stat.playOneMinute",
+		"count": 72000,
+		"xPos": 3,
+		"yPos": 1
+	},
+	{
+		"id": "problem",
+		"name": "Problem",
+		"desc": "Play for 24 hours.",
+		"stat": "stat.playOneMinute",
+		"count": 1728000,
+		"xPos": 1,
+		"yPos": 1
+	},
+	{
+		"id": "mineStone",
+		"name": "I am a Miner",
+		"desc": "Mine a stack of stone.",
+		"stat": "stat.mineBlock.1",
+		"count": 64,
+		"xPos": 0,
+		"yPos": -1
+	}
+]
