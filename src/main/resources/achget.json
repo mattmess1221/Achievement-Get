@@ -5,6 +5,7 @@
 		"desc": "Walk 10m",
 		"stat": "stat.walkOneCm",
 		"count": 1000,
+		"color": "gold",
 		"xPos": 0,
 		"yPos": 0
 	},
@@ -122,6 +123,7 @@
 		"desc": "Mine a stack of stone.",
 		"stat": "stat.mineBlock.1",
 		"count": 64,
+		"item": "minecraft:cobblestone",
 		"xPos": 0,
 		"yPos": -1
 	}

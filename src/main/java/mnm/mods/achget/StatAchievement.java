@@ -1,7 +1,8 @@
 package mnm.mods.achget;
 
+import cpw.mods.fml.common.registry.GameRegistry;
 import net.minecraft.event.HoverEvent;
-import net.minecraft.init.Items;
+import net.minecraft.item.ItemStack;
 import net.minecraft.stats.Achievement;
 import net.minecraft.stats.StatBase;
 import net.minecraft.stats.StatList;
@@ -17,13 +18,32 @@ public class StatAchievement extends Achievement {
     private String description;
     private int count;
 
+    private EnumChatFormatting color = EnumChatFormatting.GRAY;
+
     public StatAchievement(JsonAchievement json) {
-        super(json.id, "", json.xPos, json.yPos, Items.apple, null);
+        super(json.id, "", json.xPos, json.yPos, getItem(json.item), null);
         this.stat = StatList.getOneShotStat(json.stat);
         this.name = json.name;
         this.description = json.desc;
         this.count = json.count;
+
+        EnumChatFormatting color = EnumChatFormatting.getValueByName(json.color);
+        if (color != null) {
+            this.color = color;
+        } else {
+            AchievementGet.logger.warn("Unknown color: " + (json.color == null ? "null" : json.color));
+        }
         this.registerStat();
+    }
+
+    private static ItemStack getItem(String item) {
+        String modid = "minecraft";
+        String name = item;
+        if (item.contains(":")) {
+            modid = item.substring(0, item.indexOf(':'));
+            name = item.substring(item.indexOf(':') + 1);
+        }
+        return GameRegistry.findItemStack(modid, name, 1);
     }
 
     public StatBase getStat() {
@@ -38,7 +58,7 @@ public class StatAchievement extends Achievement {
     public IChatComponent getStatName() {
         IChatComponent text = this.name.createCopy();
         ChatStyle style = text.getChatStyle();
-        style.setColor(EnumChatFormatting.GRAY);
+        style.setColor(color);
 
         // So the achievement doesn't have to be registered on the client.
         IChatComponent desc = new ChatComponentText("");
@@ -66,6 +86,8 @@ public class StatAchievement extends Achievement {
         private IChatComponent name;
         private String desc;
         private String stat;
+        private String item = "minecraft:apple";
+        private String color;
         private int count;
         private int xPos;
         private int yPos;
