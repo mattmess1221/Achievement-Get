@@ -3,6 +3,7 @@ package mnm.mods.achget;
 import net.minecraft.event.HoverEvent;
 import net.minecraft.item.ItemStack;
 import net.minecraft.stats.Achievement;
+import net.minecraft.stats.AchievementList;
 import net.minecraft.stats.StatBase;
 import net.minecraft.stats.StatList;
 import net.minecraft.util.ChatComponentText;
@@ -68,6 +69,18 @@ public class StatAchievement extends Achievement {
         return count;
     }
 
+    public void unregisterStat() {
+        AchievementList.achievementList.remove(this);
+        StatList.allStats.remove(this);
+        AchievementGet.instance.oneShotStats.remove(this.statId);
+    }
+
+    @Override
+    public Achievement registerStat() {
+        // TODO Auto-generated method stub
+        return super.registerStat();
+    }
+
     @Override
     public IChatComponent getStatName() {
         IChatComponent text = this.name.createCopy();
@@ -92,7 +105,7 @@ public class StatAchievement extends Achievement {
         return this.description;
     }
 
-    static class JsonAchievement {
+    public static class JsonAchievement {
 
         private String id;
         private IChatComponent name;
@@ -107,4 +120,11 @@ public class StatAchievement extends Achievement {
         private int yPos;
 
     }
+
+    public static class ParentNotLoadedException extends Exception {
+
+        private static final long serialVersionUID = 6733700654373877073L;
+
+    }
+
 }
