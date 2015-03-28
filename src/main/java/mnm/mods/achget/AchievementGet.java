@@ -35,7 +35,7 @@ public class AchievementGet {
     @EventHandler
     public void init(FMLPreInitializationEvent event) {
         logger = event.getModLog();
-        File f = new File(event.getModConfigurationDirectory(), MODID + ".json");
+        File f = new File(event.getModConfigurationDirectory(), "Achievements.json");
         proxy.init(f);
         MinecraftForge.EVENT_BUS.register(this);
     }

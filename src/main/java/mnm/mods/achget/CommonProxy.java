@@ -29,8 +29,8 @@ public class CommonProxy {
                 json = FileUtils.readFileToString(f, Charsets.UTF_8);
             } else {
                 // load and save defaults
-                json = IOUtils.toString(ClassLoader.getSystemResourceAsStream("achget.json"));
-                FileUtils.write(f, json);
+                json = IOUtils.toString(ClassLoader.getSystemResourceAsStream("achievements.json"));
+                FileUtils.write(f, json, Charsets.UTF_8);
             }
         } catch (IOException e) {
             logger.warn("Unable to load achievements.", e);

@@ -33,6 +33,12 @@ public class StatAchievement extends Achievement {
         } else {
             AchievementGet.logger.warn("Unknown color: " + json.color);
         }
+        if (json.special) {
+            this.setSpecial();
+        }
+        if (json.parent == null) {
+            this.initIndependentStat();
+        }
         this.registerStat();
     }
 
@@ -95,6 +101,7 @@ public class StatAchievement extends Achievement {
         private String stat;
         private String item = "minecraft:apple";
         private String color = "gray";
+        private boolean special;
         private int count;
         private int xPos;
         private int yPos;
