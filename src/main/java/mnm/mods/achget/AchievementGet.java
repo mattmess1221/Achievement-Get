@@ -15,6 +15,7 @@ import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.EventHandler;
 import cpw.mods.fml.common.Mod.Instance;
 import cpw.mods.fml.common.SidedProxy;
+import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 
@@ -31,12 +32,17 @@ public class AchievementGet {
     public static CommonProxy proxy;
 
     public Map<String, StatAchievement> achievements = Maps.newHashMap();
+    private File config;
 
     @EventHandler
     public void init(FMLPreInitializationEvent event) {
         logger = event.getModLog();
-        File f = new File(event.getModConfigurationDirectory(), "Achievements.json");
-        proxy.init(f);
+        this.config = new File(event.getModConfigurationDirectory(), "achievements.json");
+    }
+
+    @EventHandler
+    public void postInit(FMLPostInitializationEvent event) {
+        proxy.init(config);
         MinecraftForge.EVENT_BUS.register(this);
     }
 
