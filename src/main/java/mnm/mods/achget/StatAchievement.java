@@ -1,6 +1,5 @@
 package mnm.mods.achget;
 
-import cpw.mods.fml.common.registry.GameRegistry;
 import net.minecraft.event.HoverEvent;
 import net.minecraft.item.ItemStack;
 import net.minecraft.stats.Achievement;
@@ -10,6 +9,7 @@ import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.ChatStyle;
 import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.IChatComponent;
+import cpw.mods.fml.common.registry.GameRegistry;
 
 public class StatAchievement extends Achievement {
 
@@ -18,10 +18,10 @@ public class StatAchievement extends Achievement {
     private String description;
     private int count;
 
-    private EnumChatFormatting color = EnumChatFormatting.GRAY;
+    private EnumChatFormatting color;
 
-    public StatAchievement(JsonAchievement json) {
-        super(json.id, "", json.xPos, json.yPos, getItem(json.item), null);
+    public StatAchievement(JsonAchievement json) throws ParentNotLoadedException {
+        super(json.id, "", json.xPos, json.yPos, getItem(json.item), getParent(json.parent));
         this.stat = StatList.getOneShotStat(json.stat);
         this.name = json.name;
         this.description = json.desc;
@@ -31,9 +31,17 @@ public class StatAchievement extends Achievement {
         if (color != null) {
             this.color = color;
         } else {
-            AchievementGet.logger.warn("Unknown color: " + (json.color == null ? "null" : json.color));
+            AchievementGet.logger.warn("Unknown color: " + json.color);
         }
         this.registerStat();
+    }
+
+    private static Achievement getParent(String parent) throws ParentNotLoadedException {
+        if (parent == null)
+            return null;
+        if (!AchievementGet.instance.achievements.containsKey(parent))
+            throw new ParentNotLoadedException();
+        return AchievementGet.instance.achievements.get(parent);
     }
 
     private static ItemStack getItem(String item) {
@@ -69,9 +77,7 @@ public class StatAchievement extends Achievement {
         desc.appendSibling(new ChatComponentText(this.getDescription()));
         HoverEvent hover = new HoverEvent(HoverEvent.Action.SHOW_TEXT, desc);
         style.setChatHoverEvent(hover);
-        // style.setChatHoverEvent(new
-        // HoverEvent(HoverEvent.Action.SHOW_ACHIEVEMENT, new
-        // ChatComponentText(this.statId)));
+
         return text;
     }
 
@@ -85,9 +91,10 @@ public class StatAchievement extends Achievement {
         private String id;
         private IChatComponent name;
         private String desc;
+        private String parent;
         private String stat;
         private String item = "minecraft:apple";
-        private String color;
+        private String color = "gray";
         private int count;
         private int xPos;
         private int yPos;

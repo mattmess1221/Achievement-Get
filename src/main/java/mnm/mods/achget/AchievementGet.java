@@ -1,12 +1,15 @@
 package mnm.mods.achget;
 
 import java.io.File;
+import java.util.Map;
 
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
 
 import org.apache.logging.log4j.Logger;
+
+import com.google.common.collect.Maps;
 
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.EventHandler;
@@ -27,7 +30,7 @@ public class AchievementGet {
     @SidedProxy(clientSide = "mnm.mods.achget.ClientProxy", serverSide = "mnm.mods.achget.CommonProxy")
     public static CommonProxy proxy;
 
-    public StatAchievement[] achievements;
+    public Map<String, StatAchievement> achievements = Maps.newHashMap();
 
     @EventHandler
     public void init(FMLPreInitializationEvent event) {
@@ -48,7 +51,7 @@ public class AchievementGet {
     }
 
     private void checkStats(EntityPlayerMP player) {
-        for (StatAchievement sa : achievements) {
+        for (StatAchievement sa : achievements.values()) {
             StatHandler handler = new StatHandler(sa);
             if (handler.shouldAward(player)) {
                 handler.giveAchievement(player);
