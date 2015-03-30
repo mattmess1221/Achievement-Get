@@ -6,6 +6,7 @@
 		"description": "So many achievements",
 		"version": "${version}",
 		"mcversion": "${mcversion}",
+		"logoFile": "/achget_logo.png",
 		"authorList": ["killjoy1221"]
 	}]
 }
