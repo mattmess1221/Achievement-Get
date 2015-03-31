@@ -26,7 +26,6 @@ public class AchievementChannel extends MessageToMessageCodec<FMLProxyPacket, Pa
 
     @Override
     protected void decode(ChannelHandlerContext ctx, FMLProxyPacket msg, List<Object> out) throws Exception {
-        // TODO Auto-generated method stub
         PacketBuffer payload = new PacketBuffer(msg.payload());
         Packet packet = new AchSyncPacket();
         packet.readPacketData(payload);
@@ -35,7 +34,6 @@ public class AchievementChannel extends MessageToMessageCodec<FMLProxyPacket, Pa
 
     @Override
     protected void encode(ChannelHandlerContext ctx, Packet msg, List<Object> out) throws Exception {
-        // TODO Auto-generated method stub
         PacketBuffer buffer = new PacketBuffer(Unpooled.buffer());
         msg.writePacketData(buffer);
         FMLProxyPacket proxyPacket = new FMLProxyPacket(buffer.copy(), ctx.channel().attr(NetworkRegistry.FML_CHANNEL)

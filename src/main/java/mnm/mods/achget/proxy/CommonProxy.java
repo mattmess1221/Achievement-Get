@@ -9,6 +9,7 @@ import mnm.mods.achget.AchievementGet;
 import mnm.mods.achget.StatAchievement;
 import mnm.mods.achget.StatAchievement.JsonAchievement;
 import mnm.mods.achget.StatAchievement.ParentNotLoadedException;
+import mnm.mods.achget.StatAchievement.StatNotFoundException;
 import net.minecraft.stats.Achievement;
 import net.minecraft.util.IChatComponent;
 import net.minecraftforge.common.AchievementPage;
@@ -61,6 +62,7 @@ public class CommonProxy {
     public void register(List<JsonAchievement> achieves) {
         this.unregisterAchievements();
 
+        List<String> failed = Lists.newArrayList();
         AchievementGet.logger.info("Registering " + achieves.size() + " achievements.");
         // load achievements
         for (int i = 0; i < achieves.size(); i++) {
@@ -69,8 +71,19 @@ public class CommonProxy {
                 StatAchievement sa = new StatAchievement(ja);
                 AchievementGet.instance.achievements.put(sa.statId, sa);
             } catch (ParentNotLoadedException e) {
-                achieves.add(ja); // do later
+                if (!failed.contains(ja.getParent())) {
+                    achieves.add(ja); // do later
+                } else {
+                    failed.add(ja.getID());
+                }
+            } catch (StatNotFoundException e) {
+                // stat not valid
+                AchievementGet.logger.warn(e.getMessage());
+                failed.add(ja.getID());
             }
+        }
+        if (failed.size() > 0) {
+            AchievementGet.logger.warn(failed.size() + " achievements were not registered.");
         }
         // register page
         final String PAGE_NAME = "Achievement Get";

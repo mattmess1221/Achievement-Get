@@ -21,9 +21,12 @@ public class StatAchievement extends Achievement {
 
     private EnumChatFormatting color;
 
-    public StatAchievement(JsonAchievement json) throws ParentNotLoadedException {
+    public StatAchievement(JsonAchievement json) throws ParentNotLoadedException, StatNotFoundException {
         super(json.id, "", json.xPos, json.yPos, getItem(json.item), getParent(json.parent));
         this.stat = StatList.getOneShotStat(json.stat);
+        if (stat == null) {
+            throw new StatNotFoundException("Stat '" + json.stat + "' does not exist.");
+        }
         this.name = json.name;
         this.description = json.desc;
         this.count = json.count;
@@ -58,7 +61,7 @@ public class StatAchievement extends Achievement {
             modid = item.substring(0, item.indexOf(':'));
             name = item.substring(item.indexOf(':') + 1);
         }
-        return GameRegistry.findItemStack(modid, name, 1);
+        return new ItemStack(GameRegistry.findItem(modid, name));
     }
 
     public StatBase getStat() {
@@ -73,12 +76,6 @@ public class StatAchievement extends Achievement {
         AchievementList.achievementList.remove(this);
         StatList.allStats.remove(this);
         AchievementGet.instance.oneShotStats.remove(this.statId);
-    }
-
-    @Override
-    public Achievement registerStat() {
-        // TODO Auto-generated method stub
-        return super.registerStat();
     }
 
     @Override
@@ -119,12 +116,29 @@ public class StatAchievement extends Achievement {
         private int xPos;
         private int yPos;
 
+        public String getID() {
+            return id;
+        }
+
+        public String getParent() {
+            return parent;
+        }
+
     }
 
     public static class ParentNotLoadedException extends Exception {
 
         private static final long serialVersionUID = 6733700654373877073L;
 
+    }
+
+    public static class StatNotFoundException extends Exception {
+
+        private static final long serialVersionUID = -578829147493724218L;
+
+        public StatNotFoundException(String msg) {
+            super(msg);
+        }
     }
 
 }
