@@ -7,7 +7,7 @@ import net.minecraft.network.INetHandler;
 import net.minecraft.network.Packet;
 import net.minecraft.network.PacketBuffer;
 
-public class AchSyncPacket extends Packet {
+public class AchSyncPacket implements Packet {
 
     private String json;
 
@@ -25,7 +25,7 @@ public class AchSyncPacket extends Packet {
 
     @Override
     public void writePacketData(PacketBuffer data) throws IOException {
-        data.writeStringToBuffer(json);
+        data.writeString(json);
     }
 
     @Override

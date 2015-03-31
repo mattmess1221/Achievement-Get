@@ -11,8 +11,7 @@ public class StatHandler {
     }
 
     public int getStat(EntityPlayerMP player) {
-        // this method `writeStat()` is wrongly named.
-        return player.getStatFile().writeStat(achievement.getStat());
+        return player.getStatFile().readStat(achievement.getStat());
     }
 
     public boolean hasAchievement(EntityPlayerMP player) {

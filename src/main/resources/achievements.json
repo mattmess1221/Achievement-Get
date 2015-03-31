@@ -132,10 +132,21 @@
 		"id": "mineStone",
 		"name": "I am a Miner",
 		"desc": "Mine a stack of stone.",
-		"stat": "stat.mineBlock.1",
+		"stat": "stat.mineBlock.minecraft.stone",
 		"count": 64,
 		"item": "minecraft:cobblestone",
 		"xPos": 0,
+		"yPos": -1
+	},
+	{
+		"id": "mineCoal",
+		"name": "Coalwood resident",
+		"desc": "Mine a stack of coal",
+		"parent": "mineStone",
+		"stat": "stat.mineBlock.minecraft.coal_ore",
+		"count": 64,
+		"item": "minecraft:coal",
+		"xPos": 2,
 		"yPos": -1
 	}
 ]

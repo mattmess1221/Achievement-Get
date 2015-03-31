@@ -1,6 +1,7 @@
 package mnm.mods.achget.net;
 
 import io.netty.buffer.Unpooled;
+import io.netty.channel.ChannelHandler;
 import io.netty.channel.ChannelHandler.Sharable;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.codec.MessageToMessageCodec;
@@ -12,12 +13,12 @@ import mnm.mods.achget.AchievementGet;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.network.Packet;
 import net.minecraft.network.PacketBuffer;
-import cpw.mods.fml.common.network.FMLEmbeddedChannel;
-import cpw.mods.fml.common.network.FMLOutboundHandler;
-import cpw.mods.fml.common.network.FMLOutboundHandler.OutboundTarget;
-import cpw.mods.fml.common.network.NetworkRegistry;
-import cpw.mods.fml.common.network.internal.FMLProxyPacket;
-import cpw.mods.fml.relauncher.Side;
+import net.minecraftforge.fml.common.network.FMLEmbeddedChannel;
+import net.minecraftforge.fml.common.network.FMLOutboundHandler;
+import net.minecraftforge.fml.common.network.FMLOutboundHandler.OutboundTarget;
+import net.minecraftforge.fml.common.network.NetworkRegistry;
+import net.minecraftforge.fml.common.network.internal.FMLProxyPacket;
+import net.minecraftforge.fml.relauncher.Side;
 
 @Sharable
 public class AchievementChannel extends MessageToMessageCodec<FMLProxyPacket, Packet> {
@@ -36,8 +37,7 @@ public class AchievementChannel extends MessageToMessageCodec<FMLProxyPacket, Pa
     protected void encode(ChannelHandlerContext ctx, Packet msg, List<Object> out) throws Exception {
         PacketBuffer buffer = new PacketBuffer(Unpooled.buffer());
         msg.writePacketData(buffer);
-        FMLProxyPacket proxyPacket = new FMLProxyPacket(buffer.copy(), ctx.channel().attr(NetworkRegistry.FML_CHANNEL)
-                .get());
+        FMLProxyPacket proxyPacket = new FMLProxyPacket(buffer, ctx.channel().attr(NetworkRegistry.FML_CHANNEL).get());
         out.add(proxyPacket);
     }
 
