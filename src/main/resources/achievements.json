@@ -148,5 +148,18 @@
 		"item": "minecraft:coal",
 		"xPos": 2,
 		"yPos": -1
+	},
+	{
+		"id": "shearSheep",
+		"name": "Woolly Mammoth",
+		"desc": "Get some wool",
+		"stat": "stat.killEntity.Sheep",
+		"count": 3,
+		"item": {
+			"id": "minecraft:wool",
+			"meta": "4"
+		},
+		"xPos": -2,
+		"yPos": -1
 	}
 ]

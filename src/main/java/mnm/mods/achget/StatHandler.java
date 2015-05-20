@@ -23,6 +23,6 @@ public class StatHandler {
     }
 
     public boolean shouldAward(EntityPlayerMP player) {
-        return !hasAchievement(player) && getStat(player) > achievement.getCount();
+        return !hasAchievement(player) && getStat(player) >= achievement.getCount();
     }
 }

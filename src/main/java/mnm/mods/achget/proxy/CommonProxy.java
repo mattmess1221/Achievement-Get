@@ -6,10 +6,11 @@ import java.io.InputStream;
 import java.util.List;
 
 import mnm.mods.achget.AchievementGet;
+import mnm.mods.achget.JsonAchievement;
+import mnm.mods.achget.ParentNotLoadedException;
 import mnm.mods.achget.StatAchievement;
-import mnm.mods.achget.StatAchievement.JsonAchievement;
-import mnm.mods.achget.StatAchievement.ParentNotLoadedException;
-import mnm.mods.achget.StatAchievement.StatNotFoundException;
+import mnm.mods.achget.StatNotFoundException;
+import net.minecraft.item.ItemStack;
 import net.minecraft.stats.Achievement;
 import net.minecraft.util.IChatComponent;
 import net.minecraftforge.common.AchievementPage;
@@ -19,12 +20,17 @@ import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
 
 import com.google.common.collect.Lists;
+import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
 public class CommonProxy {
 
+    private static final Gson GSON = new GsonBuilder()
+            .registerTypeAdapter(IChatComponent.class, new IChatComponent.Serializer())
+            .registerTypeAdapter(ItemStack.class, new JsonAchievement.ItemSerializer()).create();
+
     public void init(File f) {
-        // The default TODO externalize
+        // The default
         String json = "[]";
         InputStream in = null;
         try {
@@ -53,9 +59,7 @@ public class CommonProxy {
 
     public void register(String json) {
         AchievementGet.instance.jsonAch = json;
-        List<JsonAchievement> achieves = Lists.newArrayList(new GsonBuilder()
-                .registerTypeAdapter(IChatComponent.class, new IChatComponent.Serializer()).create()
-                .fromJson(json, JsonAchievement[].class));
+        List<JsonAchievement> achieves = Lists.newArrayList(GSON.fromJson(json, JsonAchievement[].class));
         register(achieves);
     }
 
@@ -71,15 +75,15 @@ public class CommonProxy {
                 StatAchievement sa = new StatAchievement(ja);
                 AchievementGet.instance.achievements.put(sa.statId, sa);
             } catch (ParentNotLoadedException e) {
-                if (!failed.contains(ja.getParent())) {
+                if (!failed.contains(ja.parent)) {
                     achieves.add(ja); // do later
                 } else {
-                    failed.add(ja.getID());
+                    failed.add(ja.id);
                 }
             } catch (StatNotFoundException e) {
                 // stat not valid
                 AchievementGet.logger.warn(e.getMessage());
-                failed.add(ja.getID());
+                failed.add(ja.id);
             }
         }
         if (failed.size() > 0) {
