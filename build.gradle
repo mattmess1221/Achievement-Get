@@ -24,7 +24,7 @@ group= "mnm.mods"
 archivesBaseName = "AchievementGet"
 
 minecraft {
-    version = "1.8-recommended"
+    version = "1.8-11.14.3.1502"
     runDir = "run"
 
     // the mappings can be changed at any time, and must be in the following format.
